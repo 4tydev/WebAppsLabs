@@ -8,16 +8,19 @@
     <title>Lab 01</title>
 </head>
 <body>
-    <p>Product Name</p>
-    <input type="text" name="ProductName" id="productName">
-    <p>Product Price</p>
-    <input type="text" name="ProductPrice" id="productPrice">
-    <button id="addItem"></button>
+    <form>
+        Product Name:
+        <input type="text" name="ProductName" id="productName">
+        Product Price:
+        <input type="text" name="ProductPrice" id="productPrice">
+        <button id="addItem"> Click me.</button>
+    </form>
+    
     <table>
         <tr>
-            <th>Product Name</th>
-            <th>Product Price</th>
-            <th>Delete</th>
+            <th>Product Name </th>
+            <th>Product Price </th>
+            <th>Delete </th>
         </tr>
     </table>
     <script>
@@ -27,15 +30,23 @@
                 this.price = price;
             }
         }
-
-        var productName = document.getElementById("productName");
-        var productPrice = document.getElementById("productPrice");
-        var addItemButton = document.getAnimations("addItem");
-        addItemButton.onclick = function(){
-            var table = document.getElementsByTagName('table'); 
+        var table = document.getElementsByTagName('table')[0];
+        var addItemButton = document.getElementById("addItem");
+        var form = document.getElementsByTagName("form")[0];
+        addItemButton.addEventListener("click", function(){
+            var productName = form.elements[0].value;
+            var productPrice = form.elements[1].value;
+            var product = new Product(productName, productPrice);
             var newTr = document.createElement('tr');
+            var tdProductName = document.createElement('td');
+            var tdProductPrice = document.createElement('td');
+            tdProductName.textContent= product.name;
+            tdProductPrice.textContent = product.price;
 
-        }
+            newTr.appendChild(tdProductName);
+            newTr.appendChild(tdProductPrice);
+            table.appendChild(newTr);
+        })
 
     </script>
 </body>
