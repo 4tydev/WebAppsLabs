@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 01</title>
+</head>
+<body>
+    <p>Product Name</p>
+    <input type="text" name="ProductName" id="productName">
+    <p>Product Price</p>
+    <input type="text" name="ProductPrice" id="productPrice">
+    <button id="addItem"></button>
+    <table>
+        <tr>
+            <th>Product Name</th>
+            <th>Product Price</th>
+            <th>Delete</th>
+        </tr>
+    </table>
+    <script>
+        class Product {
+            constructor (name,price){
+                this.name = name;
+                this.price = price;
+            }
+        }
+
+        var productName = document.getElementById("productName");
+        var productPrice = document.getElementById("productPrice");
+        var addItemButton = document.getAnimations("addItem");
+        addItemButton.onclick = function(){
+            var table = document.getElementsByTagName('table'); 
+            var newTr = document.createElement('tr');
+
+        }
+
+    </script>
+</body>
+</html>
