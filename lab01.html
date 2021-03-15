@@ -14,6 +14,7 @@
         Product Price:
         <input type="text" name="ProductPrice" id="productPrice">
         <button id="addItem"> Click me.</button>
+        <button onclick="test()">Click me.</button>
     </form>
     
     <table>
@@ -28,11 +29,13 @@
             constructor (name,price){
                 this.name = name;
                 this.price = price;
+                this.deleteButton = document.createElement("button");
             }
         }
         var table = document.getElementsByTagName('table')[0];
-        var addItemButton = document.getElementById("addItem");
         var form = document.getElementsByTagName("form")[0];
+        var addItemButton = form.elements[2];
+        
         addItemButton.addEventListener("click", function(){
             var productName = form.elements[0].value;
             var productPrice = form.elements[1].value;
@@ -46,7 +49,7 @@
             newTr.appendChild(tdProductName);
             newTr.appendChild(tdProductPrice);
             table.appendChild(newTr);
-        })
+        });
 
     </script>
 </body>
