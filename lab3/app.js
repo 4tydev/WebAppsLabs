@@ -22,7 +22,11 @@ app.route('/').post((req,res)=>{
         }
         res.send(pokemon_obj);
     
-    })
+    }).catch(error){
+        console.log(error);
+        res.status(400).send("There was a problem with the server")
+    }
+
 })
 
 app.listen(3000,()=>{
