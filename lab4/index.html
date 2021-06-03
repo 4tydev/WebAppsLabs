@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <title>Pokemon api</title>
+    <script type="module">
+        var html = new XMLHttpRequest();
+        var poke_button = document.getElementById("poke_button");
+        var poke_name_text;
+        var pokemon_obj;
+
+        poke_button.onclick = function(e){
+            console.log("in")
+            var poke_name = document.getElementById('poke_name');
+            poke_name_text = poke_name.value;
+            html.open('POST','http://localhost:3000/queryForm');
+            html.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+            html.onreadystatechange = function(){
+                var DONE = 4; // readyState 4 means the request is done.
+                var OK = 200; // status 200 is a successful return.
+                if(html.readyState == 4){
+                    if(html.status == 200){
+                        pokemon_obj = JSON.parse(html.response);
+                        var cards_div = document.getElementById('pokemon_cards');
+                        var pokemon_name_element = document.createElement('h1');
+                        var pokemon_weight_element = document.createElement('p');
+                        var pokemon_weight_span = document.createElement('span');
+                        var pokemon_image_element = document.createElement('img');
+                        var pokemon_delete_button = document.createElement('button');
+
+                        var card_div = document.createElement("div");
+                        card_div.className = 'card col-sm'
+                        pokemon_image_element.className= 'card-img';
+                        pokemon_delete_button.className= 'btn btn-danger'
+
+                        pokemon_name_element.innerHTML= pokemon_obj.name;
+                        pokemon_weight_element.innerHTML= "Weight: ";
+                        pokemon_weight_span.innerHTML = pokemon_obj.weight;
+                        pokemon_weight_element.appendChild(pokemon_weight_span);
+                        pokemon_image_element.src = pokemon_obj.image;
+                        pokemon_delete_button.innerHTML = "Delete";
+
+                        
+
+                        card_div.appendChild(pokemon_name_element);
+                        card_div.appendChild(pokemon_image_element);
+                        card_div.appendChild(pokemon_weight_element);
+                        card_div.appendChild(pokemon_delete_button);
+
+                        pokemon_delete_button.onclick = function(e){
+                            cards_div.removeChild(card_div);
+                            var weight_number = document.getElementById('weights').getElementsByTagName('span')[0];
+                            var weight = card_div.getElementsByTagName('p')[0].getElementsByTagName('span')[0];
+                            console.log(weight);
+                            weight_number.innerHTML = parseInt(String(weight_number.innerHTML)) - parseInt(String(weight.innerHTML));
+                        }
+
+                        cards_div.appendChild(card_div);
+
+
+                        var weight_number = document.getElementById('weights').getElementsByTagName('span')[0];
+
+                        weight_number.innerHTML = parseInt(String(weight_number.innerHTML)) + pokemon_obj.weight;
+
+                    }
+                    else{
+                        alert("No pokemon was found")
+                    }
+                }
+                
+            }
+            html.send('name='+poke_name_text);
+
+        }
+    </script>
+</head>
+<body>
+    <h1>Pokemon Cards</h1>
+    Name: <input type="text" name="pokemon_name" id="poke_name"> <button id="poke_button" class = "btn btn-primary">Pokemon Button</button>
+    <div id="pokemon_cards" class = "row">
+    </div>
+    <p id="weights">Total Weights: <span>0</span>  </p>
+</body>
+</html>

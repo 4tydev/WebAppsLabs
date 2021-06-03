@@ -4,6 +4,7 @@ var axios = require('axios').default;
 var body_parser = require('body-parser');
 var cors = require('cors')
 
+var pokemon_map = new Map();
 app.use(body_parser.urlencoded({extended: false}));
 app.use(cors());
 
@@ -22,10 +23,10 @@ app.route('/').post((req,res)=>{
         }
         res.send(pokemon_obj);
     
-    }).catch(error){
+    }).catch(function(error){
         console.log(error);
         res.status(400).send("There was a problem with the server")
-    }
+    })
 
 })
 
